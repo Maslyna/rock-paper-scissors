@@ -1,6 +1,6 @@
 services:
     postgres:
-        container_name: postgres
+        container_name: roshambo-db
         image: postgres
         environment:
             POSTGRES_USER: sa
