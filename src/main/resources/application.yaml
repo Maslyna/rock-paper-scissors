@@ -1,0 +1,5 @@
+spring:
+    application:
+        name: roshambo
+server:
+    port: 8080
