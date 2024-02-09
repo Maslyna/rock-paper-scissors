@@ -1,15 +1,18 @@
 package net.roshambo.service;
 
 import lombok.RequiredArgsConstructor;
-import net.roshambo.exception.GlobalServiceException;
+import net.roshambo.exception.handler.PlayerHasMovedException;
 import net.roshambo.model.Move;
 import net.roshambo.model.Player;
 import net.roshambo.model.Result;
 import net.roshambo.model.entity.Round;
 import net.roshambo.repository.RoundRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -17,13 +20,14 @@ import reactor.core.publisher.Mono;
 public class RoundService {
     private final RoundRepository repository;
 
+    @Transactional
     public Mono<Round> makeMove(final Player player, final Move move) {
         return repository.findByResult(Result.ACTIVE)
                 .flatMap(existingRound -> {
                     if (hasPlayerMoved(existingRound, player)) {
-                        return Mono.error(new GlobalServiceException(HttpStatus.BAD_REQUEST, "Move already made"));
+                        return Mono.error(new PlayerHasMovedException(HttpStatus.BAD_REQUEST, "Move already made"));
                     }
-                    Round updatedRound = checkWinner(updateRoundWithMove(existingRound, player, move));
+                    final Round updatedRound = checkWinner(updateRoundWithMove(existingRound, player, move));
                     return repository.save(updatedRound);
                 })
                 .switchIfEmpty(repository.save(
@@ -31,8 +35,11 @@ public class RoundService {
                 ));
     }
 
-    public Flux<Round> getHistory() {
-        return repository.findAll();
+    public Mono<Page<Round>> getHistory(final PageRequest pageable) {
+        return repository.findAllNotActiveRounds(pageable)
+                .collectList()
+                .zipWith(repository.countAllNotActiveRounds())
+                .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
     }
 
     private boolean hasPlayerMoved(final Round round, final Player player) {
@@ -57,7 +64,7 @@ public class RoundService {
         return round;
     }
 
-    private Result determineWinner(Move moveA, Move moveB) {
+    private Result determineWinner(final Move moveA, final Move moveB) {
         if (moveA == moveB) {
             return Result.TIE;
         } else if (
