@@ -7,9 +7,6 @@ import net.roshambo.model.Player;
 import net.roshambo.model.Result;
 import net.roshambo.model.entity.Round;
 import net.roshambo.repository.RoundRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +30,6 @@ public class RoundService {
                 .switchIfEmpty(repository.save(
                         updateRoundWithMove(new Round(), player, move)
                 ));
-    }
-
-    public Mono<Page<Round>> getHistory(final PageRequest pageable) {
-        return repository.findAllNotActiveRounds(pageable)
-                .collectList()
-                .zipWith(repository.countAllNotActiveRounds())
-                .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
     }
 
     private boolean hasPlayerMoved(final Round round, final Player player) {

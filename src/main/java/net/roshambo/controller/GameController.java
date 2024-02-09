@@ -9,6 +9,8 @@ import net.roshambo.mapper.RoundMapper;
 import net.roshambo.model.Move;
 import net.roshambo.model.Player;
 import net.roshambo.model.dto.RoundDTO;
+import net.roshambo.model.dto.StatisticDTO;
+import net.roshambo.service.HistoryService;
 import net.roshambo.service.RoundService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,12 +24,13 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @Validated
 public class GameController {
-    private final RoundService service;
+    private final RoundService roundService;
+    private final HistoryService historyService;
     private final RoundMapper mapper;
 
     @PostMapping()
     public Mono<Void> makeMove(@RequestParam("player") Player player, @RequestParam("move") Move move) {
-        return service.makeMove(player, move)
+        return roundService.makeMove(player, move)
                 .then();
     }
 
@@ -44,8 +47,18 @@ public class GameController {
             String order,
             @RequestParam(name = "sortBy", defaultValue = "createdAt") String... sortBy
     ) {
-        return service.getHistory(
+        return historyService.getHistory(
                 PageRequest.of(pageNum, pageSize, Sort.Direction.valueOf(order), sortBy)
         ).map(page -> page.map(mapper::roundToRoundDTO));
+    }
+
+    @GetMapping("/statistic")
+    public Mono<StatisticDTO> statistic() {
+        return historyService.getStatistic();
+    }
+
+    @DeleteMapping
+    public Mono<Void> clearHistory() {
+        return historyService.deleteHistory();
     }
 }
