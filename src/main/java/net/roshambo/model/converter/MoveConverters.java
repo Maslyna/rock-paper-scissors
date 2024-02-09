@@ -1,10 +1,13 @@
 package net.roshambo.model.converter;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import net.roshambo.model.Move;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MoveConverters {
     @ReadingConverter
     public static class MoveReadingConverter implements Converter<Short, Move> {
@@ -21,5 +24,4 @@ public class MoveConverters {
             return source.value;
         }
     }
-
 }

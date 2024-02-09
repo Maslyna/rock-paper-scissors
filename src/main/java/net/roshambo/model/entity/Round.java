@@ -25,13 +25,15 @@ public class Round {
     private UUID roundId;
 
     @Column("move_a")
-    private Move moveA;
+    @Builder.Default
+    private Move moveA = Move.NONE;
 
     @Column("move_b")
-    private Move moveB;
+    private Move moveB = Move.NONE;
 
     @Column("result")
-    private Result result;
+    @Builder.Default
+    private Result result = Result.ACTIVE;
 
     @Column("created_at")
     @CreatedDate

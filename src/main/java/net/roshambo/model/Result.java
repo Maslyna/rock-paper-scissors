@@ -4,18 +4,20 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum Result {
-    TIE((short) -1),
-    WIN_A((short) 0),
-    WIN_B((short) 1);
+    ACTIVE((short) -1),
+    TIE((short) 0),
+    WIN_A((short) 1),
+    WIN_B((short) 2);
 
     public final Short value;
 
 
     public static Result valueOf(Short value) {
         return switch (value) {
-            case -1 -> TIE;
-            case 0 -> WIN_A;
-            case 1 -> WIN_B;
+            case -1 -> ACTIVE;
+            case 0  -> TIE;
+            case 1  -> WIN_A;
+            case 2  -> WIN_B;
             default -> null;
         };
     }

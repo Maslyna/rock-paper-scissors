@@ -8,7 +8,5 @@ CREATE TABLE t_rounds
     move_a     SMALLINT                                   NOT NULL,
     move_b     SMALLINT                                   NOT NULL,
     result     SMALLINT                                   NOT NULL,
-
     created_at TIMESTAMP WITHOUT TIME ZONE                NOT NULL
-
 );
