@@ -20,6 +20,7 @@
         <version>3.2.2</version>
     </parent>
 
+
     <dependencies>
         <!--    SPRING    -->
         <dependency>
@@ -82,5 +83,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 </project>

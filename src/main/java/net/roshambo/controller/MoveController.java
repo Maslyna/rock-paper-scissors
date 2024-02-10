@@ -28,7 +28,7 @@ public class MoveController {
                                        message = "move can be only: [ROCK, PAPER, SCISSORS]"
                                )
                                String move) {
-        return roundService.makeMove(player, Move.valueOf(move))
+        return roundService.makeMove(player, Move.valueOf(move.toUpperCase()))
                 .then();
     }
 }

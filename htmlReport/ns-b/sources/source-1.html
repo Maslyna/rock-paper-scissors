@@ -1,0 +1,151 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > R2dbcTemplateRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">net.roshambo.repository</a>
+</div>
+
+<h1>Coverage Summary for Class: R2dbcTemplateRepository (net.roshambo.repository)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">R2dbcTemplateRepository</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">R2dbcTemplateRepository$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package net.roshambo.repository;
+&nbsp;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import net.roshambo.model.Status;
+&nbsp;import net.roshambo.model.entity.Round;
+&nbsp;import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import org.springframework.transaction.ReactiveTransactionManager;
+&nbsp;import org.springframework.transaction.reactive.TransactionalOperator;
+&nbsp;import reactor.core.publisher.Flux;
+&nbsp;import reactor.core.publisher.Mono;
+&nbsp;
+&nbsp;import static org.springframework.data.relational.core.query.Criteria.where;
+&nbsp;import static org.springframework.data.relational.core.query.Query.query;
+&nbsp;
+&nbsp;@Repository
+&nbsp;@RequiredArgsConstructor
+&nbsp;public class R2dbcTemplateRepository {
+&nbsp;    private final R2dbcEntityTemplate template;
+&nbsp;    private final ReactiveTransactionManager transactionManager;
+&nbsp;
+&nbsp;    public Mono&lt;Long&gt; countAllWhereStatusIs(Status status) {
+<b class="fc">&nbsp;        return template.count(query(where(&quot;status&quot;).is(status.value)), Round.class);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Flux&lt;Round&gt; selectAllWhereStatusNot(Status status) {
+<b class="fc">&nbsp;        return template.select(query(where(&quot;status&quot;).not(status.value)), Round.class);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Mono&lt;Long&gt; countAllWhereStatusNot(Status status) {
+<b class="fc">&nbsp;        return template.count(query(where(&quot;status&quot;).not(status.value)), Round.class);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public TransactionalOperator getTransaction() {
+<b class="fc">&nbsp;        return TransactionalOperator.create(transactionManager);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-10 15:56</div>
+</div>
+</body>
+</html>

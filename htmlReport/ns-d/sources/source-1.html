@@ -1,0 +1,112 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Round</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">net.roshambo.model.entity</a>
+</div>
+
+<h1>Coverage Summary for Class: Round (net.roshambo.model.entity)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">Round$RoundBuilder</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package net.roshambo.model.entity;
+&nbsp;
+&nbsp;import lombok.*;
+&nbsp;import net.roshambo.model.Move;
+&nbsp;import net.roshambo.model.Status;
+&nbsp;import org.springframework.data.annotation.CreatedDate;
+&nbsp;import org.springframework.data.annotation.Id;
+&nbsp;import org.springframework.data.relational.core.mapping.Column;
+&nbsp;import org.springframework.data.relational.core.mapping.Table;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.UUID;
+&nbsp;
+&nbsp;@AllArgsConstructor
+&nbsp;@NoArgsConstructor
+&nbsp;@Builder
+&nbsp;@Getter
+&nbsp;@Setter
+&nbsp;@ToString
+&nbsp;
+&nbsp;@Table(&quot;t_rounds&quot;)
+&nbsp;public class Round {
+&nbsp;    @Id
+&nbsp;    @Column(&quot;round_id&quot;)
+&nbsp;    private UUID roundId;
+&nbsp;
+&nbsp;    @Column(&quot;move_a&quot;)
+&nbsp;    @Builder.Default
+&nbsp;    private Move moveA = Move.NONE;
+&nbsp;
+&nbsp;    @Column(&quot;move_b&quot;)
+&nbsp;    private Move moveB = Move.NONE;
+&nbsp;
+&nbsp;    @Column(&quot;status&quot;)
+&nbsp;    @Builder.Default
+&nbsp;    private Status status = Status.ACTIVE;
+&nbsp;
+&nbsp;    @Column(&quot;created_at&quot;)
+&nbsp;    @CreatedDate
+&nbsp;    private LocalDateTime createdAt;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-10 15:56</div>
+</div>
+</body>
+</html>

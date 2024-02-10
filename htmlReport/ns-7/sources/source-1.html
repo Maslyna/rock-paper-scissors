@@ -1,0 +1,127 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Move</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">net.roshambo.model</a>
+</div>
+
+<h1>Coverage Summary for Class: Move (net.roshambo.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Move</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90,9%
+  </span>
+  <span class="absValue">
+    (10/11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package net.roshambo.model;
+&nbsp;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;
+<b class="fc">&nbsp;@RequiredArgsConstructor</b>
+&nbsp;public enum Move {
+<b class="fc">&nbsp;    NONE((short) -1),</b>
+<b class="fc">&nbsp;    ROCK((short) 0),</b>
+<b class="fc">&nbsp;    PAPER((short) 1),</b>
+<b class="fc">&nbsp;    SCISSORS((short) 2);</b>
+&nbsp;
+&nbsp;    public final short value;
+&nbsp;
+&nbsp;    public static Move valueOf(short value) {
+<b class="fc">&nbsp;        return switch (value) {</b>
+<b class="fc">&nbsp;            case -1 -&gt; NONE;</b>
+<b class="fc">&nbsp;            case 0 -&gt; ROCK;</b>
+<b class="fc">&nbsp;            case 1 -&gt; PAPER;</b>
+<b class="fc">&nbsp;            case 2 -&gt; SCISSORS;</b>
+<b class="nc">&nbsp;            default -&gt; null;</b>
+&nbsp;        };
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-10 15:56</div>
+</div>
+</body>
+</html>

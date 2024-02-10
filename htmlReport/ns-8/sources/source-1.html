@@ -1,0 +1,143 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RoundBeforeConvertCallback</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">net.roshambo.model.callback</a>
+</div>
+
+<h1>Coverage Summary for Class: RoundBeforeConvertCallback (net.roshambo.model.callback)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RoundBeforeConvertCallback</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90%
+  </span>
+  <span class="absValue">
+    (9/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package net.roshambo.model.callback;
+&nbsp;
+&nbsp;import net.roshambo.model.Move;
+&nbsp;import net.roshambo.model.Status;
+&nbsp;import net.roshambo.model.entity.Round;
+&nbsp;import org.reactivestreams.Publisher;
+&nbsp;import org.springframework.data.r2dbc.mapping.event.BeforeConvertCallback;
+&nbsp;import org.springframework.data.relational.core.sql.SqlIdentifier;
+&nbsp;import org.springframework.stereotype.Component;
+&nbsp;import reactor.core.publisher.Mono;
+&nbsp;
+&nbsp;@Component
+<b class="fc">&nbsp;public class RoundBeforeConvertCallback implements BeforeConvertCallback&lt;Round&gt; {</b>
+&nbsp;    @Override
+&nbsp;    public Publisher&lt;Round&gt; onBeforeConvert(Round entity, SqlIdentifier table) {
+<b class="fc">&nbsp;        return Mono.just(checkWinner(entity));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Round checkWinner(final Round round) {
+<b class="fc">&nbsp;        if (round.getMoveA() != Move.NONE &amp;&amp; round.getMoveB() != Move.NONE) {</b>
+<b class="fc">&nbsp;            round.setStatus(determineWinner(round.getMoveA(), round.getMoveB()));</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return round;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Status determineWinner(final Move moveA, final Move moveB) {
+<b class="fc">&nbsp;        if (moveA == moveB) {</b>
+<b class="nc">&nbsp;            return Status.TIE;</b>
+<b class="fc">&nbsp;        } else if (</b>
+&nbsp;                (moveA == Move.ROCK &amp;&amp; moveB == Move.SCISSORS)
+&nbsp;                        || (moveA == Move.PAPER &amp;&amp; moveB == Move.ROCK)
+&nbsp;                        || (moveA == Move.SCISSORS &amp;&amp; moveB == Move.PAPER)
+&nbsp;        ) {
+<b class="fc">&nbsp;            return Status.WIN_A;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return Status.WIN_B;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-02-10 15:56</div>
+</div>
+</body>
+</html>
