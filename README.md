@@ -35,7 +35,7 @@
 - **Support for Only Two Players**: Limiting the number of players (only two players) it's a drawback for games oriented on multiplayer gaming.
 
 - **Lack of a GUI**: The need to create a GUI for normal use of the service.
-- 
+  
 ---
 
 https://github.com/Maslyna/rock-paper-scissors/assets/102993813/d3974363-fc2f-4057-85d3-5edcfbb12977
