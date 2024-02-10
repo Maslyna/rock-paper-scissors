@@ -124,6 +124,14 @@ public class IntegrationTests {
                     .exchange()
                     .expectStatus().isOk();
         }
+
+        @Test
+        @DisplayName("should return ok when generate rounds")
+        void shouldReturnOkWhenGenerateRounds() {
+            client.post().uri(ServiceURI.GENERATE)
+                    .exchange()
+                    .expectStatus().isOk();
+        }
     }
 
     @Nested

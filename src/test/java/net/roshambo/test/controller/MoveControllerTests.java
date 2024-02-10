@@ -42,4 +42,18 @@ public class MoveControllerTests {
                 .expectStatus().isOk()
                 .expectBody(Void.class);
     }
+
+    @Test
+    @DisplayName("should return valid status")
+    void testGenerateEndpoint() {
+        final int count = 120;
+        when(service.generateRounds(eq(count))).thenReturn(Mono.empty());
+
+        client.post().uri(builder -> builder.path(ServiceURI.GENERATE)
+                        .queryParam("count", count)
+                        .build()
+                ).exchange()
+                .expectStatus().isOk()
+                .expectBody(Void.class);
+    }
 }

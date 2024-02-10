@@ -38,7 +38,7 @@ public class HistoryController {
             @RequestParam(name = "sortBy", defaultValue = "createdAt") String... sortBy
     ) {
         return historyService.getHistory(
-                PageRequest.of(pageNum, pageSize, Sort.Direction.valueOf(order), sortBy)
+                PageRequest.of(pageNum, pageSize, Sort.Direction.valueOf(order.toUpperCase()), sortBy)
         ).map(page -> page.map(mapper::roundToRoundDTO));
     }
 
