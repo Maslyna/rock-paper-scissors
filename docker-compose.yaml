@@ -13,17 +13,18 @@ services:
         networks:
             - postgres
         restart: unless-stopped
-    pgadmin:
-        container_name: pgadmin
-        image: dpage/pgadmin4:latest
+    roshambo:
+        container_name: roshambo
+        image: maslyna/rock-paper-scissors:1.0-SNAPSHOT
         environment:
-            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-            PGADMIN_CONFIG_SERVER_MODE: 'False'
-        volumes:
-            - pgadmin:/var/lib/pgadmin
+            DB_URL: r2dbc:postgresql://roshambo-db:5432/sa
+            DB_USER: sa
+            DB_PASSWORD: password
+            FLYWAY_DB_URL: jdbc:postgresql://roshambo-db:5432/sa
+            FLYWAY_DB_USER: sa
+            FLYWAY_DB_PASSWORD: password
         ports:
-            - "5050:80"
+            - "8080:8080"
         networks:
             - postgres
         restart: unless-stopped

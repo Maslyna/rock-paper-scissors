@@ -3,10 +3,9 @@ package net.roshambo.test.service;
 import net.roshambo.model.Move;
 import net.roshambo.model.Player;
 import net.roshambo.model.Status;
-import net.roshambo.model.callback.RoundBeforeConvertCallback;
 import net.roshambo.model.entity.Round;
 import net.roshambo.repository.RoundRepository;
-import net.roshambo.service.RoundService;
+import net.roshambo.service.impl.RoundServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +27,7 @@ public class RoundServiceTest {
     private RoundRepository roundRepository;
 
     @InjectMocks
-    private RoundService roundService;
+    private RoundServiceImpl roundService;
 
     @Test
     @DisplayName("should make a valid move")

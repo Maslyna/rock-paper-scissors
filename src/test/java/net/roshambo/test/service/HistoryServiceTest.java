@@ -2,11 +2,10 @@ package net.roshambo.test.service;
 
 import net.roshambo.model.Move;
 import net.roshambo.model.Status;
-import net.roshambo.model.dto.StatisticDTO;
 import net.roshambo.model.entity.Round;
-import net.roshambo.repository.R2dbcTemplateRepository;
 import net.roshambo.repository.RoundRepository;
-import net.roshambo.service.HistoryService;
+import net.roshambo.repository.impl.R2dbcTemplateRepositoryImpl;
+import net.roshambo.service.impl.HistoryServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,14 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.ReactiveTransactionManager;
-import org.springframework.transaction.TransactionException;
-import org.springframework.transaction.reactive.TransactionCallback;
-import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,12 +32,12 @@ public class HistoryServiceTest {
     private RoundRepository roundRepository;
 
     @Mock
-    private R2dbcTemplateRepository templateRepository;
+    private R2dbcTemplateRepositoryImpl templateRepository;
     @Mock
     private ReactiveTransactionManager transactionManager;
 
     @InjectMocks
-    private HistoryService historyService;
+    private HistoryServiceImpl historyService;
 
     @Test
     @DisplayName("should get history with specified parameters")
