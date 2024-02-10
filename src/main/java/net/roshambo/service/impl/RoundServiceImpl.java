@@ -11,14 +11,18 @@ import net.roshambo.service.RoundService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class RoundServiceImpl implements RoundService {
     private final RoundRepository repository;
 
-    @Override@Transactional
+    @Override
+    @Transactional
     public Mono<Round> makeMove(final Player player, final Move move) {
         return repository.findByStatus(Status.ACTIVE)
                 .flatMap(existingRound -> {
@@ -31,6 +35,21 @@ public class RoundServiceImpl implements RoundService {
                 .switchIfEmpty(repository.save(
                         updateRoundWithMove(new Round(), player, move)
                 ));
+    }
+
+    @Override
+    public Mono<Void> generateRounds(int range) {
+        final Random random = new Random();
+        final Move playerAMove = Move.PAPER;
+
+        return Flux.range(0, range)
+                .map(i -> Round.builder()
+                        .moveA(playerAMove)
+                        .moveB(Move.valueOf((short) random.nextInt(0, 3)))
+                        .build())
+                .flatMap(repository::save)
+                .then();
+
     }
 
     private boolean hasPlayerMoved(final Round round, final Player player) {

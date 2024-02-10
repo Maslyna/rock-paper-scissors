@@ -9,4 +9,6 @@ import reactor.core.publisher.Mono;
 public interface RoundService {
     @Transactional
     Mono<Round> makeMove(Player player, Move move);
+
+    Mono<Void> generateRounds(int range);
 }

@@ -1,6 +1,7 @@
 package net.roshambo.controller;
 
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import net.roshambo.model.Move;
 import net.roshambo.model.Player;
@@ -30,5 +31,10 @@ public class MoveController {
                                String move) {
         return roundService.makeMove(player, Move.valueOf(move.toUpperCase()))
                 .then();
+    }
+
+    @PostMapping("/generate")
+    public Mono<Void> generateMoves(@RequestParam(name = "count", defaultValue = "100") @PositiveOrZero int count) {
+        return roundService.generateRounds(count);
     }
 }
