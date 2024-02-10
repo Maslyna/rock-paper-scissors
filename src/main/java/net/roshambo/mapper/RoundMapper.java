@@ -13,7 +13,7 @@ public class RoundMapper {
         }
         return RoundDTO.builder()
                 .roundId(round.getRoundId())
-                .result(round.getResult())
+                .status(round.getStatus())
                 .moveA(round.getMoveA())
                 .moveB(round.getMoveB())
                 .date(round.getCreatedAt())

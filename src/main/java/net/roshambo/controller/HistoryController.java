@@ -6,12 +6,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import net.roshambo.mapper.RoundMapper;
-import net.roshambo.model.Move;
-import net.roshambo.model.Player;
 import net.roshambo.model.dto.RoundDTO;
 import net.roshambo.model.dto.StatisticDTO;
 import net.roshambo.service.HistoryService;
-import net.roshambo.service.RoundService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,19 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/v1/games")
+@RequestMapping("/api/v1/games/history")
 @RequiredArgsConstructor
 @Validated
-public class GameController {
-    private final RoundService roundService;
+public class HistoryController {
     private final HistoryService historyService;
     private final RoundMapper mapper;
-
-    @PostMapping()
-    public Mono<Void> makeMove(@RequestParam("player") Player player, @RequestParam("move") Move move) {
-        return roundService.makeMove(player, move)
-                .then();
-    }
 
     @GetMapping()
     public Mono<Page<RoundDTO>> history(
@@ -57,7 +47,7 @@ public class GameController {
         return historyService.getStatistic();
     }
 
-    @DeleteMapping
+    @DeleteMapping()
     public Mono<Void> clearHistory() {
         return historyService.deleteHistory();
     }

@@ -2,7 +2,7 @@ package net.roshambo.config;
 
 import io.r2dbc.spi.ConnectionFactory;
 import net.roshambo.model.converter.MoveConverters;
-import net.roshambo.model.converter.ResultConverters;
+import net.roshambo.model.converter.StatusConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.r2dbc.config.EnableR2dbcAuditing;
@@ -23,8 +23,8 @@ public class DatabaseConfig {
         List<Object> converters = new ArrayList<>(4);
         converters.add(new MoveConverters.MoveReadingConverter());
         converters.add(new MoveConverters.MoveWritingConverter());
-        converters.add(new ResultConverters.ResultReadingConverter());
-        converters.add(new ResultConverters.ResultWritingConverter());
+        converters.add(new StatusConverters.StatusReadingConverter());
+        converters.add(new StatusConverters.StatusWritingConverter());
         return R2dbcCustomConversions.of(
                 PostgresDialect.INSTANCE,
                 converters

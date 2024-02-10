@@ -2,7 +2,7 @@ package net.roshambo.model.entity;
 
 import lombok.*;
 import net.roshambo.model.Move;
-import net.roshambo.model.Result;
+import net.roshambo.model.Status;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -31,9 +31,9 @@ public class Round {
     @Column("move_b")
     private Move moveB = Move.NONE;
 
-    @Column("result")
+    @Column("status")
     @Builder.Default
-    private Result result = Result.ACTIVE;
+    private Status status = Status.ACTIVE;
 
     @Column("created_at")
     @CreatedDate

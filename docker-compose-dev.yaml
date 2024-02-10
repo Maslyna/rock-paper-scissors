@@ -1,7 +1,7 @@
 services:
     postgres:
         container_name: roshambo-db
-        image: postgres
+        image: postgres:15
         environment:
             POSTGRES_USER: sa
             POSTGRES_PASSWORD: password

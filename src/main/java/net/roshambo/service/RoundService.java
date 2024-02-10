@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import net.roshambo.exception.handler.PlayerHasMovedException;
 import net.roshambo.model.Move;
 import net.roshambo.model.Player;
-import net.roshambo.model.Result;
+import net.roshambo.model.Status;
 import net.roshambo.model.entity.Round;
 import net.roshambo.repository.RoundRepository;
 import org.springframework.http.HttpStatus;
@@ -19,12 +19,12 @@ public class RoundService {
 
     @Transactional
     public Mono<Round> makeMove(final Player player, final Move move) {
-        return repository.findByResult(Result.ACTIVE)
+        return repository.findByStatus(Status.ACTIVE)
                 .flatMap(existingRound -> {
                     if (hasPlayerMoved(existingRound, player)) {
                         return Mono.error(new PlayerHasMovedException(HttpStatus.BAD_REQUEST, "Move already made"));
                     }
-                    final Round updatedRound = checkWinner(updateRoundWithMove(existingRound, player, move));
+                    final Round updatedRound = updateRoundWithMove(existingRound, player, move);
                     return repository.save(updatedRound);
                 })
                 .switchIfEmpty(repository.save(
@@ -45,27 +45,6 @@ public class RoundService {
             case B -> round.setMoveB(move);
         }
         return round;
-    }
-
-    private Round checkWinner(final Round round) {
-        if (round.getMoveA() != Move.NONE && round.getMoveB() != Move.NONE) {
-            round.setResult(determineWinner(round.getMoveA(), round.getMoveB()));
-        }
-        return round;
-    }
-
-    private Result determineWinner(final Move moveA, final Move moveB) {
-        if (moveA == moveB) {
-            return Result.TIE;
-        } else if (
-                (moveA == Move.ROCK && moveB == Move.SCISSORS)
-                        || (moveA == Move.PAPER && moveB == Move.ROCK)
-                        || (moveA == Move.SCISSORS && moveB == Move.PAPER)
-        ) {
-            return Result.WIN_A;
-        } else {
-            return Result.WIN_B;
-        }
     }
 }
 

@@ -3,7 +3,7 @@ package net.roshambo.model;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum Result {
+public enum Status {
     ACTIVE((short) -1),
     TIE((short) 0),
     WIN_A((short) 1),
@@ -12,7 +12,7 @@ public enum Result {
     public final Short value;
 
 
-    public static Result valueOf(Short value) {
+    public static Status valueOf(Short value) {
         return switch (value) {
             case -1 -> ACTIVE;
             case 0  -> TIE;

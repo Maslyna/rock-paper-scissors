@@ -2,27 +2,27 @@ package net.roshambo.model.converter;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.roshambo.model.Result;
+import net.roshambo.model.Status;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.data.convert.WritingConverter;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ResultConverters {
+public class StatusConverters {
     @WritingConverter
-    public static class ResultWritingConverter implements Converter<Result, Short> {
+    public static class StatusWritingConverter implements Converter<Status, Short> {
         @Override
-        public Short convert(Result source) {
+        public Short convert(Status source) {
             return source.value;
         }
     }
 
     @ReadingConverter
-    public static class ResultReadingConverter implements Converter<Short, Result> {
+    public static class StatusReadingConverter implements Converter<Short, Status> {
 
         @Override
-        public Result convert(Short source) {
-            return Result.valueOf(source);
+        public Status convert(Short source) {
+            return Status.valueOf(source);
         }
     }
 }

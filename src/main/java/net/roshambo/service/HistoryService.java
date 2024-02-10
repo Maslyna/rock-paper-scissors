@@ -1,7 +1,7 @@
 package net.roshambo.service;
 
 import lombok.RequiredArgsConstructor;
-import net.roshambo.model.Result;
+import net.roshambo.model.Status;
 import net.roshambo.model.dto.StatisticDTO;
 import net.roshambo.model.entity.Round;
 import net.roshambo.repository.R2dbcTemplateRepository;
@@ -20,19 +20,19 @@ public class HistoryService {
     private final R2dbcTemplateRepository templateRepository;
 
     public Mono<Page<Round>> getHistory(final PageRequest pageable) {
-        return templateRepository.selectAllWhereResultNot(Result.ACTIVE)
+        return templateRepository.selectAllWhereStatusNot(Status.ACTIVE)
                 .collectList()
-                .zipWith(templateRepository.countAllWhereResultNot(Result.ACTIVE))
+                .zipWith(templateRepository.countAllWhereStatusNot(Status.ACTIVE))
                 .map(tuple -> new PageImpl<>(tuple.getT1(), pageable, tuple.getT2()));
     }
 
 
     public Mono<StatisticDTO> getStatistic() {
         final TransactionalOperator rxtx = templateRepository.getTransaction();
-        final Mono<Long> aWins = templateRepository.countAllWhereResultIs(Result.WIN_A);
-        final Mono<Long> bWins = templateRepository.countAllWhereResultIs(Result.WIN_B);
-        final Mono<Long> tie = templateRepository.countAllWhereResultIs(Result.TIE);
-        final Mono<Long> total = templateRepository.countAllWhereResultNot(Result.ACTIVE);
+        final Mono<Long> aWins = templateRepository.countAllWhereStatusIs(Status.WIN_A);
+        final Mono<Long> bWins = templateRepository.countAllWhereStatusIs(Status.WIN_B);
+        final Mono<Long> tie = templateRepository.countAllWhereStatusIs(Status.TIE);
+        final Mono<Long> total = templateRepository.countAllWhereStatusNot(Status.ACTIVE);
 
         return Mono.zip(aWins, bWins, tie, total)
                 .map(tuple -> StatisticDTO.builder()
